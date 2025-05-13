@@ -6,15 +6,15 @@
 
 > - Log to console.<br/>
 > - Log to macOS Console.app.<br/>
-> - Log to anywhere with custom action on message.
+> - Log to custom output.
 
-> Tutorial [`Mastering Logging with CPL`](https://docs.google.com/document/d/1cWsqhRphP9NzGbMxkJA1agLProjPn6GBw3QEaar4VNY/edit?usp=sharing).<br/>
+> Look at [`Mastering Logging with CPL`](https://docs.google.com/document/d/1cWsqhRphP9NzGbMxkJA1agLProjPn6GBw3QEaar4VNY/edit?usp=sharing).<br/>
 
 > `CPL` is a single author and personale solution developed in `person-to-person` relationship paradigm.
 
 [![Actions Status](https://github.com/perseusrealdeal/ConsolePerseusLogger/actions/workflows/main.yml/badge.svg)](https://github.com/perseusrealdeal/ConsolePerseusLogger/actions/workflows/main.yml)
 [![Style](https://github.com/perseusrealdeal/ConsolePerseusLogger/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/perseusrealdeal/ConsolePerseusLogger/actions/workflows/swiftlint.yml)
-[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)](/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg)](/CHANGELOG.md)
 [![Platforms](https://img.shields.io/badge/Platforms-macOS%2010.13+_|_iOS%2011.0+-orange.svg)](https://en.wikipedia.org/wiki/List_of_Apple_products)
 [![Xcode 14.2](https://img.shields.io/badge/Xcode-14.2+-red.svg)](https://en.wikipedia.org/wiki/Xcode)
 [![Swift 5.7](https://img.shields.io/badge/Swift-5.7-red.svg)](https://www.swift.org)
@@ -85,6 +85,27 @@ log.message("The app's start point...", .info)
 ```
 
 ![Image](https://github.com/user-attachments/assets/ac711ff0-4296-406c-90ba-630149dda39c)
+
+## Custom log
+
+```swift
+
+import ConsolePerseusLogger
+
+func customPrint(_ text: String) {
+    print("[MYLOG] \(text)")
+}
+
+log.customActionOnMessage = customPrint(_:)
+
+log.format = .textonly
+log.output = .custom
+
+log.message("The app's start point...", .info)
+
+```
+
+![Image](https://github.com/user-attachments/assets/94b1db2e-78b9-4a92-a7cd-ec5354cccc99)
 
 ## Log level and message types
 
@@ -164,7 +185,7 @@ log.message("The app's start point...", .info)
 
 > Console Perseus Logger running on Simulator doesn't pass DEBUG message to Console.app, instead it passes INFO message with text of DEBUG message by default if Simulator runs, so, a passed message being INFO looks like a DEBUG and it works perfactly well.<br/>
 
-> If for some reasons CPL must pass DEBUG like a DEBUG message if Simulator the option must take false `log.debugIsInfo = false`.
+> If for some reasons CPL must pass DEBUG like a DEBUG message the option should take false `log.debugIsInfo = false`.
 
 ```swift
 
