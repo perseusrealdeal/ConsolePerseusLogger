@@ -2,7 +2,12 @@
 
 [`iOS approbation app`](https://github.com/perseusrealdeal/TheOneRing) [`macOS approbation app`](https://github.com/perseusrealdeal/Arkenstone)
 
-> Light-weight logger in Swift. Hereinafter `CPL` stands for `Console Perseus Logger`.<br/>
+> Light-weight logger in Swift. Hereinafter `CPL` stands for `C`onsole `P`erseus `L`ogger.<br/>
+
+> - Log to console.<br/>
+> - Log to macOS Console.app.<br/>
+> - Log to anywhere with custom action on message.
+
 > Tutorial [`Mastering Logging with CPL`](https://docs.google.com/document/d/1cWsqhRphP9NzGbMxkJA1agLProjPn6GBw3QEaar4VNY/edit?usp=sharing).<br/>
 
 > `CPL` is a single author and personale solution developed in `person-to-person` relationship paradigm.

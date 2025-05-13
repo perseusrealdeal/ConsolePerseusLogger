@@ -70,7 +70,7 @@ public class PerseusLogger {
     public enum Output {
         case standard // In Use: Swift.print("").
         case consoleapp
-        // case outputfile
+        case custom // In Use: customActionOnMessage?("").
     }
 
     public enum Level: Int, CustomStringConvertible {
@@ -147,6 +147,8 @@ public class PerseusLogger {
     }
 
     // MARK: - Properties
+
+    public static var customActionOnMessage: ((String) -> Void)?
 
 #if DEBUG
     public static var turned = Status.on
@@ -246,7 +248,11 @@ public class PerseusLogger {
 
         let message = text
 
-        if output == .standard {
+        if output == .custom {
+
+            customActionOnMessage?(message)
+
+        } else if output == .standard {
 
             Swift.print(message) // DispatchQueue.main.async { print(message) }
 
@@ -333,7 +339,7 @@ public class PerseusLogger {
             let month = components.month?.inTime,
             let day = components.day?.inTime else { return "TIME" }
 
-        let date = "\(year)-\(month)-\(day)"
+        let date = "[\(year)-\(month)-\(day)]"
 
         // Parse time.
 
@@ -343,9 +349,9 @@ public class PerseusLogger {
             let second = components.second?.inTime,
             let subsecond = components.nanosecond?.multiply else { return "TIME" }
 
-        let time = "\(hour):\(minute):\(second):\(subsecond)"
+        let time = "[\(hour):\(minute):\(second):\(subsecond)]"
 
-        return "[\(date)] [\(time)]"
+        return "\(date) \(time)"
     }
 }
 

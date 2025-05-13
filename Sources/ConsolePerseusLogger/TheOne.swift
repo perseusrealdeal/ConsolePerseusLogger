@@ -71,7 +71,7 @@ public class PerseusLogger {
     public enum Output {
         case standard // In Use: Swift.print("").
         case consoleapp
-        // case outputfile
+        case custom // In Use: customActionOnMessage?("").
     }
 
     public enum Level: Int, CustomStringConvertible {
@@ -148,6 +148,8 @@ public class PerseusLogger {
     }
 
     // MARK: - Properties
+
+    public static var customActionOnMessage: ((String) -> Void)?
 
 #if DEBUG
     public static var turned = Status.on
@@ -247,7 +249,11 @@ public class PerseusLogger {
 
         let message = text
 
-        if output == .standard {
+        if output == .custom {
+
+            customActionOnMessage?(message)
+
+        } else if output == .standard {
 
             Swift.print(message) // DispatchQueue.main.async { print(message) }
 
