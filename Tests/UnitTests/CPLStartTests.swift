@@ -22,8 +22,9 @@ final class FunctionalTests: XCTestCase {
     override static func setUp() {
         super.setUp()
 
-        log.time = true
-        log.ownerid = true
+        log.marks = false
+        log.time = false
+        log.ownerid = false
     }
 /*
     override static func tearDown() {
@@ -34,5 +35,6 @@ final class FunctionalTests: XCTestCase {
 */
     func test_the_first_success() {
         log.message("[\(type(of: self))].\(#function)")
+        _ = log.loadConfiguration()
     }
 }

@@ -67,22 +67,24 @@ public class PerseusLogger {
     // MARK: - Constants
 
     private static let SUBSYSTEM = "Perseus"
-    private static let CATEGORY = "Logger"
+    private static let CATEGORY = "Lover"
+
+    public static let CONFIG = "CPLConfig"
 
     // MARK: - Specifics
 
-    public enum Status {
+    public enum Status: String, Decodable {
         case on
         case off
     }
 
-    public enum Output {
+    public enum Output: String, Decodable {
         case standard // In Use: Swift.print("").
         case consoleapp
         case custom // In Use: customActionOnMessage?(_:_:_:_:).
     }
 
-    public enum Level: Int, CustomStringConvertible {
+    public enum Level: Int, CustomStringConvertible, Decodable {
 
         public var description: String {
             switch self {
@@ -121,18 +123,20 @@ public class PerseusLogger {
         case fault  = 1
     }
 
-    public enum TimeMultiply {
+    public enum TimeMultiply: String, Decodable {
         // case millisecond // -3.
         // case microsecond // -6.
         case nanosecond  // -9.
     }
 
-    public enum TIDNumber {
+    public enum TIDNumber: String, Decodable {
         case hexadecimal
         case decimal
     }
 
-    public enum MessageFormat { // [TYPE] [DATE] [TIME] [PID:TID] message, file: #, line: #
+    public enum MessageFormat: String, Decodable {
+
+// [TYPE] [DATE] [TIME] [PID:TID] message, file: #, line: #
 
         case short
 
@@ -168,6 +172,22 @@ public class PerseusLogger {
 
         case textonly
 // message
+    }
+
+    public struct JsonOptions: Decodable {
+        let subsystem: String
+        let category: String
+        let turned: Status
+        let level: Level
+        let output: Output
+        let subsecond: TimeMultiply
+        let tidnumber: TIDNumber
+        let format: MessageFormat
+        let marks: Bool
+        let time: Bool
+        let ownerid: Bool
+        let directives: Bool
+        let debugIsInfo: Bool
     }
 
     // MARK: - Properties
@@ -235,6 +255,55 @@ public class PerseusLogger {
     private(set) static var consoleOSLog: OSLog?
 
     // MARK: - Contract
+
+    public static func loadConfiguration(_ pathURL: URL? = nil) -> Bool {
+
+        var jsonOptions: JsonOptions
+
+        if let path = pathURL, FileManager.default.fileExists(atPath: path.relativePath) {
+            if let data = try? Data(contentsOf: path),
+               let json = try? JSONDecoder().decode(JsonOptions.self, from: data) {
+
+                jsonOptions = json
+
+            } else {
+                log.message("Failed to load CPL config data!", .error)
+                return false
+            }
+        } else {
+            guard
+                let path = Bundle.module.url(forResource: CONFIG, withExtension: "json"),
+                let data = try? Data(contentsOf: path),
+                let json = try? JSONDecoder().decode(JsonOptions.self, from: data)
+            else {
+                log.message("Failed to load CPL config data!", .error)
+                return false
+            }
+
+            jsonOptions = json
+        }
+
+        log.message(
+"""
+\nCPL configuration setted up!\n
+subsystem   : \(jsonOptions.subsystem)
+category    : \(jsonOptions.category)
+turned      : \(jsonOptions.turned)
+level       : \(jsonOptions.level)
+output      : \(jsonOptions.output)
+subsecond   : \(jsonOptions.subsecond)
+tidnumber   : \(jsonOptions.tidnumber)
+format      : \(jsonOptions.format)
+marks       : \(jsonOptions.marks)
+time        : \(jsonOptions.time)
+ownerid     : \(jsonOptions.ownerid)
+directives  : \(jsonOptions.directives)
+debugIsInfo : \(jsonOptions.debugIsInfo)
+\n
+""")
+
+        return true
+    }
 
     public static func message(_ text: @autoclosure () -> String,
                                _ type: Level = .debug,

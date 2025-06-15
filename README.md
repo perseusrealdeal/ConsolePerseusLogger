@@ -2,11 +2,13 @@
 
 > [`iOS approbation app`](https://github.com/perseusrealdeal/TheOneRing) [`macOS approbation app`](https://github.com/perseusrealdeal/Arkenstone)
 
-> Light-weight logger in Swift. Hereinafter `CPL` stands for `C`onsole `P`erseus `L`ogger.<br/>
+> Light-weight logging lover in Swift. Hereinafter `CPL` stands for `C`onsole `P`erseus `L`ogger.<br/>
 
 > - Log to console.<br/>
 > - Log to macOS Console.app.<br/>
 > - Log to custom output.
+
+> `[TYPE] [DATE] [TIME] [PID:TID] message, file: #, line: #`
 
 > `CPL` is a single author and personale solution developed in `person-to-person` relationship paradigm.
 
@@ -85,7 +87,7 @@ import ConsolePerseusLogger
 
 // MARK: - Log to Console.app
 
-// log.logObject = ("MyApp", "MyLogger") // Customs for Console.app Subsystem and Category.
+// log.logObject = ("MyApp", "MyLover") // Customs for Console.app Subsystem and Category.
 
 log.output = .consoleapp
 log.message("The app's start point...", .info)
@@ -137,7 +139,7 @@ log.message("The app's start point...", .info)
 
 ![Image](https://github.com/user-attachments/assets/69ee1f63-a58d-414a-9cc8-fe1673a15982)
 
-## Setup the Logger for Work
+## Setting the Logger Up
 
 > Default values of CPL options depend on DEBUG/RELEASE.
 
@@ -149,16 +151,16 @@ log.message("The app's start point...", .info)
 
 > Other CPL options are the same for DEBUG/RELEASE by default. 
 
-| Options     | Default in DEBUG      | Default in RELEASE    |
-| :---------- | :-------------------- | :-------------------- |
-| subsecond   | .nanosecond           | .nanosecond           |
-| tidnumber   | .hexadecimal          | .hexadecimal          |
-| format      | .short                | .short                |
-| marks       | true                  | true                  |
-| time        | false                 | false                 |
-| ownerid     | false                 | false                 |
-| directives  | false                 | false                 | 
-| logObject   | ("Perseus", "Logger") | ("Perseus", "Logger") |
+| Options     | Default in DEBUG     | Default in RELEASE   |
+| :---------- | :------------------- | :------------------- |
+| subsecond   | .nanosecond          | .nanosecond          |
+| tidnumber   | .hexadecimal         | .hexadecimal         |
+| format      | .short               | .short               |
+| marks       | true                 | true                 |
+| time        | false                | false                |
+| ownerid     | false                | false                |
+| directives  | false                | false                | 
+| logObject   | ("Perseus", "Lover") | ("Perseus", "Lover") |
 
 > Special option goes kinda lifehack. Matter only if Simulator. 
 

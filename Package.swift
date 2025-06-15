@@ -40,7 +40,10 @@ let package = Package(
     targets: [
         .target(
             name: "ConsolePerseusLogger",
-            dependencies: []),
+            dependencies: [],
+            resources: [
+                .copy("CPLConfig.json")
+            ]),
         .testTarget(
             name: "UnitTests",
             dependencies: ["ConsolePerseusLogger"])
